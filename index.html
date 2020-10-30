@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Certificate Generator</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Open+Sans|Rock+Salt|Shadows+Into+Light|Cedarville+Cursive');
+
+        @media print {
+            .container {
+            height: 600px;
+            width: 800px;
+            border: 2px solid #000;
+            background-color: cadetblue;
+            padding: 20px;
+            text-align: center;
+            }
+            h1 {
+                font-size: 60px;
+            }
+            .name {
+                font-weight: 400;
+                font-size: 26px;
+                font-family: 'Rock Salt', cursive;
+            }
+            .bottomline {
+                margin-top: -30px;
+            }
+            .date {
+                position: absolute;
+                float: left;
+            }
+            .sign {
+                position: absolute;
+                margin-left: 650px;
+            }
+            .bottomtext {
+                margin-top: -10px;
+            }
+            .sign-text {
+                font-size: 20px;
+                font-weight: 600;
+                font-family: 'Cedarville Cursive', cursive;
+            }
+            .date-text {
+                font-size: 20px;
+                font-weight: 600;
+                font-family: 'Shadows Into Light', cursive;
+            }
+            input {
+                display: none;
+            }
+        }
+        input {
+            width: 200px;
+            height: 30px;
+            padding: 5px;
+            margin: 5px;
+        }
+        .certificate {
+            margin: 0px auto;
+        }
+        .hidden {
+            display: none;
+        }
+        .show {
+            display: block;
+        }
+        .container {
+            height: 600px;
+            width: 800px;
+            border: 2px solid #000;
+            background-color: cadetblue;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 60px;
+        }
+        .name {
+            font-weight: 400;
+            font-size: 26px;
+            font-family: 'Rock Salt', cursive;
+        }
+        .bottomline {
+            margin-top: -30px;
+        }
+        .date {
+            position: absolute;
+            float: left;
+        }
+        .sign {
+            position: absolute;
+            margin-left: 640px;
+        }
+        .bottomtext {
+            margin-top: -10px;
+        }
+        .sign-text {
+            font-size: 20px;
+            font-weight: 600;
+            font-family: 'Cedarville Cursive', cursive;
+        }
+        .date-text {
+            font-size: 20px;
+            font-weight: 600;
+            font-family: 'Shadows Into Light', cursive;
+        }
+        #error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <input type="text" name="name" id="name" placeholder="Enter Your Name" onchange="changeName()" required/> <br />
+    <input type="text" name="topic" id="intopic" placeholder="Enter Topic Name" onchange="changeTopic()" required/> <br />
+    <input type="text" name="coord" id="incoord" placeholder="Enter Co-ordinator Name" onchange="changeCoord()" required/> <br />
+    <input type="button" name="generate" id="generate" value="Generate Certificate" onclick="showCertificate()" />
+    <input type="button" name="reset" id="reset" value="Reset" onclick="reset()" />
+    <input type="button" name="save" id="save" value="Save as PDF" onclick="save()" />
+    <p id="error"></p>
+    <div class="certificate hidden" id="certificate">
+        <div class="container">
+            <h1>Certificate of Completion</h1>
+            <h2>This certificate is presented to</h3>
+            <p class="name" id="cname">Your Name</p>
+            <p class="bottomline">______________________________________________</p>
+            <h4>For successfully completeing the course</h4>
+            <h3 id="topic">Topic Name</h3>
+            <div class="date">
+                <p class="date-text" id="date">25/10/2020</p>
+                <p class="bottomline">______________</p>
+                <h5 class="bottomtext">Date</h5>
+            </div>
+            <div class="sign">
+                <p class="sign-text" id="coord">Co-ordinator Name</p>
+                <p class="bottomline">______________</p>
+                <h5 class="bottomtext">Signature</h5>
+            </div>
+        </div>
+    </div>
+    <script>
+        function changeName() {
+            var x = document.getElementById("name");
+            var cname = document.getElementById("cname");
+            cname.innerText = x.value;
+        }
+        function changeTopic() {
+            var y = document.getElementById("intopic");
+            var topic = document.getElementById("topic");
+            topic.innerText = y.value;
+        }
+        function changeCoord() {
+            var z = document.getElementById("incoord");
+            var coord = document.getElementById("coord");
+            coord.innerText = z.value;
+        }
+        function showCertificate() {
+            var x = document.getElementById("name");
+            var y = document.getElementById("intopic");
+            var z = document.getElementById("incoord");
+            a = document.getElementById("error");
+            if(x.value == "" || y.value == "" || z.value == "") {
+                a.innerText = "Some Fields are empty."
+            } else {
+                a.innerText = "";
+                var element = document.getElementById("certificate");
+                element.classList.remove("hidden");
+                element.classList.add("show");
+            }
+        }
+        function reset() {
+            var x = document.getElementById("name");
+            x.value = "";
+            var y = document.getElementById("intopic");
+            y.value = "";
+            var z = document.getElementById("incoord");
+            z.value = "";
+            a = document.getElementById("error");
+            a.innerText = "";
+            var element = document.getElementById("certificate");
+            element.classList.remove("show");
+            element.classList.add("hidden");
+        }
+        function save() {
+            var x = document.getElementById("name");
+            var y = document.getElementById("intopic");
+            var z = document.getElementById("incoord");
+            a = document.getElementById("error");
+            var element = document.getElementById("certificate");
+            if(x.value == "" || y.value == "" || z.value == "") {
+                a.innerText = "Some Fields are empty or certificate no generated."
+            } else {
+                window.print();
+            }
+        }
+        var date = document.getElementById("date");
+        date.innerText = new Date().toLocaleDateString("en-IN");
+    </script>
+</body>
+</html>
